@@ -26,7 +26,10 @@ def get_details(url):
         return stamp
 
     try:
-        price = html.select('.entry-summary ins .woocommerce-Price-amount')[0].get_text().strip()
+        price_elem = html.select('.entry-summary ins .woocommerce-Price-amount')
+        if not price_elem:
+            price_elem = html.select('.entry-summary .woocommerce-Price-amount')
+        price = price_elem[0].get_text().strip()
         stamp['price'] = price.replace('$', '').replace(',', '').strip()
     except: 
         stamp['price'] = None
